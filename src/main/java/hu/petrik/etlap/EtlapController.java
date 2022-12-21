@@ -80,4 +80,20 @@ public class EtlapController {
     public void rendezesLista(Event event) {
         etlapTable.getOnSort();
     }
+
+    @FXML
+    public void leirasMutatas(Event event) {
+        leiras.getItems().clear();
+        leiras.getItems().add(getSelectedEtel().getLeiras());
+    }
+
+    private Etlap getSelectedEtel() {
+        int selectedIndex = etlapTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex == -1) {
+            alert(Alert.AlertType.WARNING,
+                    "Előbb válasszon ki egy ételt a táblázatból", "");
+            return null;
+        }
+        return etlapTable.getSelectionModel().getSelectedItem();
+    }
 }
