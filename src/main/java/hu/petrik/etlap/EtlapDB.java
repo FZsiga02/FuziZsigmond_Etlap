@@ -35,4 +35,14 @@ public class EtlapDB {
         }
         return etelek;
     }
+
+    public boolean createEtlap(Etlap etel) throws SQLException {
+        String sql = "INSERT INTO etlap(nev, leiras, ar, kategoria) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, etel.getNev());
+        stmt.setString(2, etel.getLeiras());
+        stmt.setInt(3, etel.getAr());
+        stmt.setString(4, etel.getKategoria());
+        return stmt.executeUpdate() > 0;
+    }
 }
