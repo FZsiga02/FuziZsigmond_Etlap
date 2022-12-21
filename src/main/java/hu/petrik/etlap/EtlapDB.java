@@ -52,4 +52,15 @@ public class EtlapDB {
         stmt.setInt(1, id);
         return stmt.executeUpdate() > 0;
     }
+
+    public boolean updateEtel(Etlap etel) throws SQLException {
+        String sql = "UPDATE etlap SET nev = ?, leiras = ?, ar= ?, kategoria= ? WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, etel.getNev());
+        stmt.setString(2, etel.getLeiras());
+        stmt.setInt(3, etel.getAr());
+        stmt.setString(4, etel.getKategoria());
+        stmt.setInt(5, etel.getId());
+        return stmt.executeUpdate() > 0;
+    }
 }

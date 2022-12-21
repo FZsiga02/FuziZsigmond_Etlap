@@ -146,4 +146,32 @@ public class EtlapController {
         }
         leiras.getItems().clear();
     }
+
+    private Etlap getSelectedEtelEmel() {
+        int selectedIndex = etlapTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex == -1) {
+            return null;
+        }
+        return etlapTable.getSelectionModel().getSelectedItem();
+    }
+
+    @FXML
+    public void szazalekEmeles(MouseEvent actionEvent){
+        Etlap selected = getSelectedEtelEmel();
+        if (selected == null) {
+            Optional<ButtonType> optionalButtonType = alert(Alert.AlertType.CONFIRMATION,"Biztos megszeretné növelni az összes étel árát?","");
+        }else{
+            Optional<ButtonType> optionalButtonType = alert(Alert.AlertType.CONFIRMATION,"Biztos megszeretné növelni a(z) " +selected.getNev()+" árát?","");
+        }
+    }
+
+    @FXML
+    public void fixEmeles(MouseEvent actionEvent){
+        Etlap selected = getSelectedEtelEmel();
+        if (selected == null) {
+            Optional<ButtonType> optionalButtonType = alert(Alert.AlertType.CONFIRMATION,"Biztos megszeretné növelni az összes étel árát?","");
+        }else{
+            Optional<ButtonType> optionalButtonType = alert(Alert.AlertType.CONFIRMATION,"Biztos megszeretné növelni a(z) " +selected.getNev()+" árát?","");
+        }
+    }
 }
