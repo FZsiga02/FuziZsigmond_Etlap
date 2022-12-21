@@ -45,4 +45,11 @@ public class EtlapDB {
         stmt.setString(4, etel.getKategoria());
         return stmt.executeUpdate() > 0;
     }
+
+    public boolean deleteEtel(int id) throws SQLException {
+        String sql = "DELETE FROM etlap WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, id);
+        return stmt.executeUpdate() > 0;
+    }
 }

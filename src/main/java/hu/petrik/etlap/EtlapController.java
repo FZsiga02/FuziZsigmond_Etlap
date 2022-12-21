@@ -96,4 +96,54 @@ public class EtlapController {
         }
         return etlapTable.getSelectionModel().getSelectedItem();
     }
+
+    @FXML
+    public void ujEtelClick(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("etlap2-view.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 300, 300);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Stage stage = new Stage();
+        stage.setTitle("Étel létrehozása");
+        stage.setScene(scene);
+        EtlapController2 controller = fxmlLoader.getController();
+        stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                System.out.println("Stage is closing");
+                stage.close();
+                try {
+                    etlapBeolvas();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        });
+    }
+
+    @FXML
+    public void etelTorlesClick(ActionEvent actionEvent) {
+        Etlap selected = getSelectedEtel();
+        if (selected == null) return;
+
+        Optional<ButtonType> optionalButtonType = alert(Alert.AlertType.CONFIRMATION,"Biztos, hogy törölni szeretné a kiválasztott ételt?","");
+        if (optionalButtonType.isEmpty() || !optionalButtonType.get().equals(ButtonType.OK) && !optionalButtonType.get().equals(ButtonType.YES)){
+            return;
+        }
+        try {
+            if (db.deleteEtel(selected.getId())) {
+                alert(Alert.AlertType.WARNING, "Sikeres Törlés!", "");
+            }else{
+                alert(Alert.AlertType.WARNING, "Sikertelen törlés!", "");
+            }
+            etlapBeolvas();
+        } catch (SQLException e) {
+            sqlAlert(e);
+        }
+        leiras.getItems().clear();
+    }
 }
